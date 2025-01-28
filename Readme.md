@@ -2,8 +2,8 @@
 
 ## Instructions and helps
 
-[Install Pulumi](https://www.pulumi.com/docs/iac/get-started/aws/begin/#install-pulumi)
-[Configure Pulumi to access your AWS account](https://www.pulumi.com/docs/iac/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account)
+- [Install Pulumi](https://www.pulumi.com/docs/iac/get-started/aws/begin/#install-pulumi)
+- [Configure Pulumi to access your AWS account](https://www.pulumi.com/docs/iac/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account)
 
 ## How to start
 
@@ -24,8 +24,43 @@ export AWS_SECRET_ACCESS_KEY="<YOUR_SECRET_ACCESS_KEY>"
 code Pulumi.dev.yaml
 # deploy
 pulumi up -s dev
+```
+
+Result of the last command should be:
+
+```
+Outputs:
+    web_dns       : "ec2-16-171-227-145.eu-north-1.compute.amazonaws.com"
+    web_private_ip: "10.0.0.176"
+    web_public_ip : "16.171.227.145"
+```
+
+Save public to '/etc/hosts'
+
+```bash
+echo '16.171.227.145    bastion' |sudo tee -a /etc/hosts
+```
+
+Setup SSH access to server 'bastion' in the file '~/.ssh/config':
+
+```
+Host bastion
+    IdentityFile /home/<USER>/.ssh/id_ed25519
+    User ec2-user
+```
+
+Verify passworldless SSH accesss to host 'bastion':
+
+```bash
+ssh bastion
+```
+
+Install software:
+
+```bash
 # install Docker and Minikube
-pyinfra apps_pyinfra/inventory.py apps_pyinfra/deploy.py
+cd apps_pyinfra
+pyinfra inventory.py deploy.py
 ```
 
 [pyinfra]: https://pyinfra.com/
