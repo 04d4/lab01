@@ -1,9 +1,13 @@
-# AWS EC2 instance with [Pulumi] and [pyinfra]
+# Simple Node.js (Express) server on AWS EC2
+
+- IaC on AWS EC2 instance with [Pulumi], [minikube], [docker] and [pyinfra]
+- CI/CD by GitHub Actions
 
 ## Instructions and helps
 
 - [Install Pulumi](https://www.pulumi.com/docs/iac/get-started/aws/begin/#install-pulumi)
 - [Configure Pulumi to access your AWS account](https://www.pulumi.com/docs/iac/get-started/aws/begin/#configure-pulumi-to-access-your-aws-account)
+- [Install kuebctl on Linux]([kubectl]: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 
 ## How to start
 
@@ -43,7 +47,7 @@ echo '16.171.227.145    bastion' |sudo tee -a /etc/hosts
 
 Setup SSH access to server 'bastion' in the file '~/.ssh/config':
 
-```
+```out
 Host bastion
     IdentityFile /home/<USER>/.ssh/id_ed25519
     User ec2-user
@@ -72,3 +76,5 @@ pyinfra inventory.py deploy.py
 
 [pyinfra]: https://pyinfra.com/
 [Pulumi]: https://www.pulumi.com/
+[minikube]: https://minikube.sigs.k8s.io/docs/
+[docker]: https://docker.io
