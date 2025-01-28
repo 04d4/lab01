@@ -1,0 +1,1 @@
+my_hosts = ["bastion"]
