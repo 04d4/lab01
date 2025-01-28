@@ -35,7 +35,7 @@ Outputs:
     web_public_ip : "16.171.227.145"
 ```
 
-Save public to '/etc/hosts'
+Save public IP to '/etc/hosts'.
 
 ```bash
 echo '16.171.227.145    bastion' |sudo tee -a /etc/hosts
@@ -49,7 +49,7 @@ Host bastion
     User ec2-user
 ```
 
-Verify passworldless SSH accesss to host 'bastion':
+Verify passworldless accesss to host 'bastion':
 
 ```bash
 ssh bastion
@@ -62,6 +62,13 @@ Install software:
 cd apps_pyinfra
 pyinfra inventory.py deploy.py
 ```
+
+## Notes
+
+- The name 'bastion' is used in 'apps_infra/inventory.py'
+- I have installed AWS CLI
+- I already have 'key_pair' for AWS EC2.
+- User behind AWS_ACCESS_KEY_ID have admin rights.
 
 [pyinfra]: https://pyinfra.com/
 [Pulumi]: https://www.pulumi.com/
