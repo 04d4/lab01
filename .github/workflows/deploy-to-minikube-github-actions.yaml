@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   job1:
-    runs-on: ubuntu-ubuntu-22.04
+    runs-on: ubuntu-latest
     name: build Node.js Docker Image and deploy to minikube
     steps:
       - uses: actions/checkout@v2
