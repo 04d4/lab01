@@ -67,6 +67,12 @@ cd apps_pyinfra
 pyinfra inventory.py deploy.py
 ```
 
+Destroy AWS EC2 instance:
+
+```bash
+plumi destroy -s dev
+```
+
 ## Notes
 
 - The name 'bastion' is used in 'apps_infra/inventory.py'
