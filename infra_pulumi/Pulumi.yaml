@@ -1,10 +1,10 @@
-name: lab01
-description: A minimal AWS Python Pulumi program
+name: lab1
+description: AWS EC2 for Node.js and Express app
 runtime:
   name: python
   options:
     toolchain: pip
-    virtualenv: venv
+    virtualenv: ../venv
 config:
   pulumi:tags:
     value:

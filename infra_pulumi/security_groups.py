@@ -1,5 +1,5 @@
 from pulumi_aws import ec2, vpc
-from .networks import custom_vpc
+from networks import custom_vpc
 
 # default security group for custom-vpc
 sg_default = ec2.DefaultSecurityGroup(

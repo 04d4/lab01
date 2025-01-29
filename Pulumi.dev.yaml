@@ -1,5 +1,0 @@
-config:
-  aws:region: eu-north-1
-  lab01:aws-instance: t3.medium
-  lab01:ssh-key: ed25519-2024
-  lab01:aws-ami: ami-02df5cb5ad97983ba

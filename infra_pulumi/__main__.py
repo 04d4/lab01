@@ -1,11 +1,11 @@
-import pulumi as plm
+import pulumi
 from pulumi_aws import ec2
-from infra_pulumi.security_groups import sg_default
-from infra_pulumi.networks import subnet_pub_1
+from security_groups import sg_default
+from networks import subnet_pub_1
 
 
 # Get configuration
-config = plm.Config()
+config = pulumi.Config()
 aws_ami = config.get("aws-ami")
 aws_instance_type = config.get("aws-instance")
 ssh_key_name = config.get("ssh-key")
@@ -26,6 +26,6 @@ web_server_1 = ec2.Instance(
 )
 
 
-plm.export('web_dns', web_server_1.public_dns)
-plm.export('web_private_ip', web_server_1.private_ip)
-plm.export('web_public_ip', web_server_1.public_ip)
+pulumi.export('web_dns', web_server_1.public_dns)
+pulumi.export('web_private_ip', web_server_1.private_ip)
+pulumi.export('web_public_ip', web_server_1.public_ip)
