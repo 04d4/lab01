@@ -20,7 +20,11 @@ jobs:
           echo -n "verifying images:"
           docker images
       - name: Deploy to minikube
-        run: kubectl apply -f lab1/k8s-node-app.yaml
+        run: |
+          kubectl apply -f lab1/k8s-node-app.yaml
+          sleep 10
+          kubectl get pods
+          kubectl get service
       - name: Test service URLs
         run: |
           minikube service list
