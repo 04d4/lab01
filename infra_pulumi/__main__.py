@@ -6,7 +6,7 @@ from networks import subnet_pub_1
 
 # Get configuration
 config = pulumi.Config()
-aws_ami = config.get("aws-ami")
+aws_ami = config.get("aws-ami-ubuntu-2404")
 aws_instance_type = config.get("aws-instance")
 ssh_key_name = config.get("ssh-key")
 

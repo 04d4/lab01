@@ -1,18 +1,50 @@
-from pyinfra.operations import server, dnf, git, systemd
+from pyinfra.operations import server, dnf, git, systemd, apt
 from pyinfra import host
-from pyinfra.facts.server import Which
+from pyinfra.facts.server import Which, LinuxDistribution, Home, User
 
+home_dir = host.get_fact(Home)
+current_user = host.get_fact(User)
+linux_version = host.get_fact(LinuxDistribution)
+print(linux_version)
 
-dnf.packages(
-    name="Insall Docker, git",
-    packages=['docker', 'git'],
-    _sudo=True
-)
+if linux_version['name'] == "Ubuntu":
+    apt.packages(
+        name="Insall packages: git",
+        packages=['git'],
+        _sudo=True
+    )
+    if not host.get_fact(Which, 'docker'):
+        server.shell(
+            name="Add repository and install Docker Engine",
+            commands=[
+                # Add Docker's official GPG key
+                "sudo apt-get update",
+                "sudo apt-get install ca-certificates curl",
+                "sudo install -m 0755 -d /etc/apt/keyrings",
+                "sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc",
+                "sudo chmod a+r /etc/apt/keyrings/docker.asc",
+                # Add the repository to Apt sources
+                'echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null',
+                "sudo apt-get update",
+                # Install Docker Engine
+                "sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin",
+                # Instal Docker Compose
+                # "sudo apt-get -y install docker-compose-plugin"
+            ]
+        )
+else:
+    # In case of Amazon Linux 2023 and other RH
+    dnf.packages(
+        name="Insall Docker, git",
+        packages=['docker', 'git'],
+        _sudo=True
+    )
+
 
 server.user(
-    name='Add ec2-user to group "docker"',
+    name='Add current user to group "docker"',
     groups=['docker'],
-    user='ec2-user',
+    user=current_user,
     _sudo=True
 )
 
@@ -50,5 +82,5 @@ if not host.get_fact(Which, 'kubectl'):
 git.repo(
     name="Clone Lab1 repo",
     src="https://github.com/04d4/lab01.git",
-    dest="/home/ec2-user/lab01"
+    dest=f"{home_dir}/lab01"
 )
